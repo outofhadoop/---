@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="parent">
+      <div id="chlid1">
+        <div id="chlid">111</div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // 创建一个自定义事件
+    var customEvent = new CustomEvent("myCustomEvent", {
+      detail: { key: "value" },
+      // composed: true
+      // bubbles: true
+    });
+
+    // 添加事件监听器
+    document
+      .getElementById("parent")
+      .addEventListener("myCustomEvent", function (event) {
+        console.log("自定义事件触发，数据为：" + event.detail.key);
+      });
+    document.getElementById("parent").addEventListener("click", (e) => {
+      console.log(e);
+
+      // 触发自定义事件
+      document.getElementById("chlid").dispatchEvent(customEvent);
+    });
+    document.getElementById("parent").addEventListener(
+      "click",
+      (e) => {
+        console.log(111);
+
+        // 触发自定义事件
+        document.getElementById("chlid").dispatchEvent(customEvent);
+      },
+      true
+    );
+  </script>
+
+  <div id="outer">
+    <div id="inner">点击我</div>
+  </div>
+
+  <script>
+    document.getElementById("outer").addEventListener("click", function () {
+      console.log("外部元素被点击");
+    });
+
+    document.getElementById("inner").addEventListener("click", function () {
+      console.log("内部元素被点击");
+    });
+  </script>
+
+  <ul id="myList">
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+
+  <script>
+    document
+      .getElementById("myList")
+      .addEventListener("click", function (event) {
+        if (event.target.tagName === "LI") {
+          console.log(event + " 被点击");
+        }
+      });
+    window.addEventListener("crossWindowMessage", function (event) {
+      const receivedData = event.detail;
+      console.log("Received message in Window B:", receivedData.message);
+    });
+  </script>
+
+  <iframe src="./iframe.html" frameborder="0"></iframe>
+</html>

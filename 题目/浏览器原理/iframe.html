@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="dispatchEvent">dispatchEvent</button>
+    <script>
+      const dataToSend = { message: "Hello from Window A!" };
+      const event = new CustomEvent("crossWindowMessage", {
+        detail: dataToSend,
+      });
+      document.getElementById('dispatchEvent').addEventListener('click', function(e) {
+            window.parent.dispatchEvent(event);
+      })
+      
+    </script>
+  </body>
+</html>
